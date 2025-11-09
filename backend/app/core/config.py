@@ -10,13 +10,13 @@ class Settings(BaseSettings):
     """Application settings loaded from environment variables."""
 
     # Application
-    APP_NAME: str = "Jewelry Shop Task Manager"
+    APP_NAME: str = "Team Task Manager"
     DEBUG: bool = False
 
     # Database
     DB_HOST: str = "localhost"
     DB_PORT: int = 5432
-    DB_NAME: str = "jewelry_tasks"
+    DB_NAME: str = "team_tasks"
     DB_USER: str = "postgres"
     DB_PASSWORD: str
 

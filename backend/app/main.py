@@ -9,7 +9,7 @@ from app.core.config import settings
 # Create FastAPI application
 app = FastAPI(
     title=settings.APP_NAME,
-    description="Task management system for jewelry shop with Telegram bot integration",
+    description="Team task management system with employee tracking and Telegram bot integration",
     version="1.0.0",
     debug=settings.DEBUG
 )
@@ -28,7 +28,7 @@ app.add_middleware(
 async def root():
     """Root endpoint - health check."""
     return {
-        "message": "Jewelry Shop Task Manager API",
+        "message": "Team Task Manager API",
         "status": "running",
         "version": "1.0.0"
     }
@@ -41,13 +41,12 @@ async def health_check():
 
 
 # Include API routers
-from app.api import auth
+from app.api import auth, employees, labels, tasks, routines, attendance, dashboard
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Authentication"])
-
-# Additional routers (to be added)
-# from app.api import employees, tasks, routines, reports
-# app.include_router(employees.router, prefix="/api/employees", tags=["employees"])
-# app.include_router(tasks.router, prefix="/api/tasks", tags=["tasks"])
-# app.include_router(routines.router, prefix="/api/routines", tags=["routines"])
-# app.include_router(reports.router, prefix="/api/reports", tags=["reports"])
+app.include_router(employees.router, prefix="/api/employees", tags=["Employees"])
+app.include_router(labels.router, prefix="/api/labels", tags=["Labels"])
+app.include_router(tasks.router, prefix="/api/tasks", tags=["Tasks"])
+app.include_router(routines.router, prefix="/api/routines", tags=["Routines"])
+app.include_router(attendance.router, prefix="/api/attendance", tags=["Attendance"])
+app.include_router(dashboard.router, prefix="/api/dashboard", tags=["Dashboard"])

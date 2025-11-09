@@ -337,6 +337,34 @@ GET    /api/reports/overdue-trends - Overdue task trends
 POST   /api/telegram/webhook    - Telegram bot webhook endpoint
 ```
 
+### Dashboard Statistics (New - For Frontend)
+```
+GET    /api/dashboard/stats     - Get dashboard overview statistics
+                                  Returns: {
+                                    attendance: {today_present, today_absent, total_employees},
+                                    tasks: {pending, in_progress, completed, overdue},
+                                    recent_tasks: [...]
+                                  }
+```
+
+---
+
+### Implementation Status
+
+**✅ Implemented:**
+- Authentication endpoints (login, logout, refresh, me) - `backend/app/api/auth.py`
+- Database models for all entities - `backend/app/models/`
+- Pydantic schemas for validation - `backend/app/schemas/`
+
+**⏳ To Be Implemented (Required for Frontend):**
+- Employee Management endpoints (CRUD, list, tasks by employee)
+- Label Management endpoints (CRUD, list)
+- Task Management endpoints (CRUD, assign, complete, comments, subtasks)
+- Routine Management endpoints (CRUD, activate/deactivate)
+- Attendance endpoints (today summary, history, reports)
+- Dashboard statistics endpoint
+- Reports & Analytics endpoints (can be deferred to Phase 4)
+
 ---
 
 ## Telegram Bot Flow & Message Design
@@ -946,22 +974,30 @@ Monthly Routines (3)
 ### Phase 3: Frontend Dashboard (Week 5)
 
 **Day 1-2: Next.js Setup & Layout**
-- [ ] Initialize Next.js 14 project with TypeScript
-- [ ] Set up Tailwind CSS
-- [ ] Install shadcn/ui components
-- [ ] Create layout structure (sidebar, header)
-- [ ] Implement routing (dashboard, tasks, routines, employees, reports)
-- [ ] Set up React Query for API calls
-- [ ] Create API client with axios
+- [ ] Initialize Next.js 14 project with TypeScript in `frontend/` folder
+- [ ] Set up Tailwind CSS with custom configuration
+- [ ] Install shadcn/ui components (button, card, form, input, table, dialog, etc.)
+- [ ] Create project folder structure:
+  - `src/app/` - Next.js app router pages (auth, dashboard layouts)
+  - `src/components/` - Reusable components (ui, layout, feature-specific)
+  - `src/lib/` - API client, auth context, utilities
+  - `src/types/` - TypeScript interfaces for API models
+- [ ] Create layout structure (sidebar navigation, header with user menu)
+- [ ] Implement app routing with layout groups (auth, dashboard)
+- [ ] Set up TanStack Query (React Query) for API state management
+- [ ] Create Axios API client with interceptors for cookie-based auth
 
 **Day 3-4: Authentication & Dashboard Page**
-- [ ] Create login page
-- [ ] Implement JWT token storage (httpOnly cookies or localStorage)
-- [ ] Create protected route wrapper
-- [ ] Build dashboard overview page
-- [ ] Show attendance summary widget
-- [ ] Show task status cards (completed, pending, overdue)
-- [ ] Display recent tasks table
+- [ ] Create login page with React Hook Form + Zod validation
+- [ ] Implement JWT token storage using **HTTP-only cookies**
+- [ ] Create authentication context provider (useAuth hook)
+- [ ] Implement protected route middleware for dashboard pages
+- [ ] Add automatic token refresh logic
+- [ ] Build dashboard overview page with grid layout
+- [ ] Create attendance summary widget (present/absent counts, today's date)
+- [ ] Create task status cards (completed, pending, in-progress, overdue counts)
+- [ ] Display recent tasks table with status badges and priority indicators
+- [ ] Add logout functionality with token cleanup
 
 **Day 5: Tasks Page**
 - [ ] Create tasks list page with filters
